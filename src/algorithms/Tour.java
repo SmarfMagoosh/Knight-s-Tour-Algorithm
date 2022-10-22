@@ -3,13 +3,11 @@ package algorithms;
 import java.util.ArrayList;
 
 public class Tour {
-	private int[][] path;         // shows the path the knight has taken
-	private boolean[][] visited;  // shows the squares the knight has visited
-	private int steps;            // the current number of moves the knight has made
-	private boolean solvable;     // true if the board has been saved false otherwise
-	private long runtime;         // tracks the times it took to solve theboard
-
-	// @author Evan Dreher
+	private int[][] path;
+	private boolean[][] visited;
+	private int steps;
+	private boolean solvable;
+	private long runtime;
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// -------------------------------WORKING
@@ -18,40 +16,48 @@ public class Tour {
 
 	/**
 	 * Initializes the knight's tour problem on a square board
+	 * 
 	 * @param size the number of files and ranks on the chess board
+	 * @since 10/19/2022
+	 * @author Evan Dreher
 	 */
+	@SuppressWarnings("unused")
 	public Tour(int size) {
 		path = new int[size][size];
 		visited = new boolean[size][size];
 		steps = 1;
-		
-		for(int[] i : path) {
-			for(int j : i) {
-				j = 0;
+
+		for (int[] ia : path) {
+			for (int i : ia) {
+				i = 0;
 			}
 		}
-		for(boolean[] b : visited) {
-			for(boolean bool : b) {
-				bool = false;
+		for (boolean[] ba : visited) {
+			for (boolean b : ba) {
+				b = false;
 			}
 		}
 	}
 
 	/**
 	 * Initializes a knight's tour problem on a rectangular board
+	 * 
 	 * @param ranks the number of ranks on the chess board
 	 * @param files the number of files on the chess board
+	 * @since 10/19/2022
+	 * @author Evan Dreher
 	 */
+	@SuppressWarnings("unused")
 	public Tour(int ranks, int files) {
 		path = new int[ranks][files];
 		visited = new boolean[ranks][files];
-		for(int[] ia : path) {
-			for(int i : ia) {
+		for (int[] ia : path) {
+			for (int i : ia) {
 				i = 0;
 			}
 		}
-		for(boolean[] ba : visited) {
-			for(boolean b : ba) {
+		for (boolean[] ba : visited) {
+			for (boolean b : ba) {
 				b = false;
 			}
 		}
@@ -60,7 +66,10 @@ public class Tour {
 
 	/**
 	 * simple getter method
+	 * 
 	 * @return solvable class member
+	 * @since 10/19/2022
+	 * @author Evan Dreher
 	 */
 	public boolean isSolved() {
 		return solvable;
@@ -68,7 +77,10 @@ public class Tour {
 
 	/**
 	 * simple getter method
+	 * 
 	 * @return runtime class member
+	 * @since 10/20/2022
+	 * @author Evan Dreher
 	 */
 	public long runtime() {
 		return runtime;
@@ -77,8 +89,11 @@ public class Tour {
 	/**
 	 * makes the first call to the recursive solution finder and tracks the time to
 	 * find a solution
-	 * @param fast set true to use warnsdorff rule for faster runtimes or false to
-	 *             use default backtracking
+	 * 
+	 * @param set fast to true to use warnsdorff rule for faster runtimes or false
+	 *            to use default backtracking
+	 * @since 10/19/2022
+	 * @author Evan Dreher
 	 */
 	public void start(boolean fast) {
 		runtime = System.currentTimeMillis();
@@ -92,51 +107,53 @@ public class Tour {
 	}
 
 	/**
-	 * finds all legal knight-moves from [row][col] that have not been visited
+	 * finds all legal knight-moves from [rank][file] that have not been visited
 	 * 
-	 * @param row the rank to find moves from
-	 * @param col the file to find moves from
-	 * @return a collection of integer pairs represented as arrays of length 2.
+	 * @param rank the rank to find moves from
+	 * @param file the file to find moves from
+	 * @return a filelection of integer pairs represented as arrays of length 2.
+	 * @since 10/19/2022
+	 * @author Evan Dreher
 	 */
-	public ArrayList<int[]> findMoves(int row, int col) {
+	public ArrayList<int[]> findMoves(int rank, int file) {
 		ArrayList<int[]> legalMoves = new ArrayList<>();
-		if(row + 2 < path.length) {
-			if(col + 1 < path[0].length) {
-				int[] move = {row + 2, col + 1};
+		if (rank + 2 < path.length) {
+			if (file + 1 < path[0].length) {
+				int[] move = { rank + 2, file + 1 };
 				legalMoves.add(move);
 			}
-			if(col - 1 >= 0) {
-				int[] move = {row + 2, col - 1};
-				legalMoves.add(move);
-			}
-		}
-		if(row - 2 >= 0) {
-			if(col + 1 < path[0].length) {
-				int[] move = {row - 2, col + 1};
-				legalMoves.add(move);
-			}
-			if(col - 1 >= 0) {
-				int[] move = {row - 2, col - 1};
+			if (file - 1 >= 0) {
+				int[] move = { rank + 2, file - 1 };
 				legalMoves.add(move);
 			}
 		}
-		if(row + 1 < path.length) {
-			if(col + 2 < path[0].length) {
-				int[] move = {row + 1, col + 2};
+		if (rank - 2 >= 0) {
+			if (file + 1 < path[0].length) {
+				int[] move = { rank - 2, file + 1 };
 				legalMoves.add(move);
 			}
-			if(col - 2 >= 0) {
-				int[] move = {row + 1, col - 2};
+			if (file - 1 >= 0) {
+				int[] move = { rank - 2, file - 1 };
 				legalMoves.add(move);
 			}
 		}
-		if(row - 1 >= 0) {
-			if(col + 2 < path[0].length) {
-				int[] move = {row - 1, col + 2};
+		if (rank + 1 < path.length) {
+			if (file + 2 < path[0].length) {
+				int[] move = { rank + 1, file + 2 };
 				legalMoves.add(move);
 			}
-			if(col - 2 >= 0) {
-				int[] move = {row - 1, col - 2};
+			if (file - 2 >= 0) {
+				int[] move = { rank + 1, file - 2 };
+				legalMoves.add(move);
+			}
+		}
+		if (rank - 1 >= 0) {
+			if (file + 2 < path[0].length) {
+				int[] move = { rank - 1, file + 2 };
+				legalMoves.add(move);
+			}
+			if (file - 2 >= 0) {
+				int[] move = { rank - 1, file - 2 };
 				legalMoves.add(move);
 			}
 		}
@@ -147,11 +164,13 @@ public class Tour {
 	 * determines if a solution has been found
 	 * 
 	 * @return true if every square has been visited, false otherwise.
+	 * @since 10/19/2022
+	 * @author Evan Dreher
 	 */
 	public boolean tourCompleted() {
-		for(boolean[] ba : visited) {
-			for(boolean b : ba) {
-				if(!b) {
+		for (boolean[] ba : visited) {
+			for (boolean b : ba) {
+				if (!b) {
 					return false;
 				}
 			}
@@ -163,12 +182,14 @@ public class Tour {
 	 * functions like findMoves() but sorts those moves in ascending order of how
 	 * many options there are from the square you move to
 	 * 
-	 * @param row the rank to find moves from
-	 * @param col the file to find mvoes from
-	 * @returna a collection of integer pairs represented as arrays
+	 * @param rank the rank to find moves from
+	 * @param file the file to find mvoes from
+	 * @return a filelection of integer pairs represented as arrays
+	 * @since 10/20/2022
+	 * @author Evan Dreher
 	 */
-	public ArrayList<int[]> warnsdorffMoves(int row, int col) {
-		ArrayList<int[]> moves = findMoves(row, col);
+	public ArrayList<int[]> warnsdorffMoves(int rank, int file) {
+		ArrayList<int[]> moves = findMoves(rank, file);
 
 		// find out how many continuing moves there are from each move
 		int[] branches = new int[moves.size()];
@@ -206,42 +227,50 @@ public class Tour {
 	/**
 	 * recursively solves the knight's tour problem using a simple backtracking
 	 * algorithm
-	 * @param row  the rank that the knight is on
-	 * @param col  the file that the knight is on
+	 * 
+	 * @param rank the rank that the knight is on
+	 * @param file the file that the knight is on
 	 * @param fast set true to use warnsdorffRules for faster runtimes, false
 	 *             otherwise
+	 * @since 10/19/2022
+	 * @author Evan Dreher
 	 */
-	public void recTour(int row, int col, boolean fast) {
+	public void recTour(int rank, int file, boolean fast) {
 		// mark current square
-		visited[row][col] = true;
-		path[row][col] = steps;
+		visited[rank][file] = true;
+		path[rank][file] = steps;
 		steps++;
-		
+
 		// try all branches from current square
 		ArrayList<int[]> moves;
-		if(fast) {
-			moves = warnsdorffMoves(row, col);
+		if (fast) {
+			moves = warnsdorffMoves(rank, file);
 		} else {
-			moves = findMoves(row, col);
+			moves = findMoves(rank, file);
 		}
-		
-		for(int[] ia : moves) {
-			if(!visited[ia[0]][ia[1]]) {
+
+		for (int[] ia : moves) {
+			if (!visited[ia[0]][ia[1]]) {
 				recTour(ia[0], ia[1], fast);
 			}
 		}
-		
+
 		// check if problem is done
-		if(tourCompleted()) {
+		if (tourCompleted()) {
 			return;
 		}
-		
-		//unmark square if no child paths works
-		visited[row][col] = false;
-		path[row][col] = 0;
+
+		// unmark square if no child paths works
+		visited[rank][file] = false;
+		path[rank][file] = 0;
 		steps--;
 	}
 
+	/**
+	 * @return a string representation of the board
+	 * @since 10/19/2022
+	 * @author Evan Dreher
+	 */
 	@Override
 	public String toString() {
 		String ts = "Path:\n";
@@ -260,53 +289,123 @@ public class Tour {
 		return ts;
 	}
 
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	// --------------------------NOT WORKING CODE-----------------------------------
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 	/**
 	 * recursively solves the knight's tour problem using a simple backtracking
-	 * algorithm
+	 * algorithm in such a way that the knight well end on the square
+	 * [endRank][endFile]
 	 * 
-	 * @param row  the rank that the knight is on
-	 * @param col  the file that the knight is on
-	 * @param fast set true to use warnsdorffRules for faster runtimes, false
-	 *             otherwise
+	 * @param rank    the rank that the knight is on
+	 * @param file    the file that the knight is on
+	 * @param fast    set true to use warnsdorffRules for faster runtimes, false
+	 *                otherwise
+	 * @param endRank the ranks that the knight will end on
+	 * @param endFile the fileumn that the knight will end on
+	 * @since 10/22/2022
+	 * @author Evan Dreher
 	 */
-	public void recTourEnd(int row, int col, boolean fast, int endRow, int endCol) {
-
+	public void recTourEnd(int rank, int file, boolean fast, int endRank, int endFile) {
 		// mark current square
-		path[row][col] = steps;
+		visited[rank][file] = true;
+		path[rank][file] = steps;
 		steps++;
 
-		if (row == endRow && col == endCol && tourCompleted()) {
+		// check if problem is done
+		if (rank == endRank && file == endFile && tourCompleted()) {
 			return;
 		}
 
 		// try all branches from current square
 		ArrayList<int[]> moves;
 		if (fast) {
-			moves = warnsdorffMoves(row, col);
+			moves = warnsdorffMoves(rank, file);
 		} else {
-			moves = findMoves(row, col);
+			moves = findMoves(rank, file);
 		}
+
 		for (int[] ia : moves) {
-			if (path[ia[0]][ia[1]] == 0) {
-				recTourEnd(ia[0], ia[1], fast, endRow, endCol);
+			if (!visited[ia[0]][ia[1]]) {
+				recTourEnd(ia[0], ia[1], fast, endRank, endFile);
+				if (tourCompleted()) {
+					return;
+				}
 			}
 		}
 
-//		// check if problem is done
-//		if (tourCompleted()) {
-//			return;
-//		}
-
 		// unmark square if no child paths works
-		path[row][col] = 0;
+		visited[rank][file] = false;
+		path[rank][file] = 0;
 		steps--;
 	}
+	
+	/**
+	 * recursively splits a piece of size n into ideal chunks of 5, 7, and 9
+	 * 
+	 * @param n the size of the piece to be split
+	 * @return an arrayList of ideal numbers such that the sum equals n
+	 * @since 10/22/2022
+	 * @author Evan Dreher
+	 */
+	public ArrayList<Integer> divide(int n) {
+		ArrayList<Integer> chunks = new ArrayList<>();
+		if (n >= 28) {
+			chunks.addAll(divide((int) Math.floor(n / 2.0)));
+			chunks.addAll(divide((int) Math.ceil(n / 2.0)));
+		} else {
+			if (n >= 23) {
+				chunks.add(9);
+				n -= 9;
+			}
+			if (n >= 21) {
+				chunks.add(7);
+				n -= 7;
+			}
+			if (n >= 19) {
+				chunks.add(5);
+				n -= 5;
+			}
+			if (n == 18) {
+				chunks.add(9);
+				chunks.add(9);
+			} else if (n == 17) {
+				chunks.add(7);
+				chunks.add(5);
+				chunks.add(5);
+			} else if (n == 16) {
+				chunks.add(9);
+				chunks.add(7);
+			} else if (n == 15) {
+				chunks.add(5);
+				chunks.add(5);
+				chunks.add(5);
+			} else if (n == 14) {
+				chunks.add(7);
+				chunks.add(7);
+			}
+		}
+		return chunks;
+	}
 
-	// @author Christian Previtali
-
-	// @author Christina Kasunick
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// --------------------------NOT WORKING CODE-----------------------------------
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	// solves a smaller section of the larger board
+	public void solvePart() {
+		// TODO complete method
+	}
+	
+	// divides the larger board into smaller sections then solves them all
+	public void dncSolve() {
+		// TODO complete method
+	}
+	
+	// stores a dynamically solved solution
+	public void dynamicStore() {
+		// TODO complete method
+	}
+	
+	// retrieves a dynamically solved solution
+	public void dynamicSolve() {
+		// TODO complete method
+	}
 }
