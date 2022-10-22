@@ -393,12 +393,12 @@ public class Tour {
 	public void solvePart() {
 		// TODO complete method
 	}
-	
+
 	// divides the larger board into smaller sections then solves them all
 	public void dncSolve() {
 		// TODO complete method
 	}
-	
+
 	// stores a dynamically solved solution
 	public void dynamicStore() {
 		// TODO complete method
