@@ -3,7 +3,9 @@ package algorithms;
 import java.util.ArrayList;
 
 /**
- * Defines a chessboard and methods that allow the knight's tour to be performed on said chessboard
+ * Defines a chessboard and methods that allow the knight's tour to be performed
+ * on said chessboard
+ * 
  * @author Evan Dreher
  * @since 10/19/2022
  */
@@ -11,18 +13,19 @@ public class Tour {
 	// tracking members
 	private int[][] board;
 	private int steps;
-	
+
 	// efficiency members
 	private boolean solved;
 	private long runtime;
-	
+
 	// size members
 	private int length;
 	private int ranks;
 	private int files;
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	// -------------------------------WORKING CODE--------------------------------------
+	// -------------------------------WORKING
+	// CODE--------------------------------------
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	/**
@@ -93,7 +96,7 @@ public class Tour {
 	public long runtime() {
 		return runtime;
 	}
-	
+
 	/**
 	 * makes the first call to the recursive solution finder and tracks the time to
 	 * find a solution
@@ -103,7 +106,7 @@ public class Tour {
 	 */
 	public void start() {
 		runtime = System.currentTimeMillis();
-		tour(0, 0);
+		structuredTour(0, 0);
 		runtime = System.currentTimeMillis() - runtime;
 	}
 
@@ -211,7 +214,7 @@ public class Tour {
 			output[counts[branches[i]] - 1] = branches[i];
 			counts[branches[i]]--;
 		}
-		
+
 		return warnsdorffMoves;
 	}
 
@@ -252,7 +255,8 @@ public class Tour {
 
 	/**
 	 * recursively solves the knight's tour problem using a simple backtracking
-	 * algorithm in such a way that the tour will be "structured" ad descripbed by Dr. Ian Parberry
+	 * algorithm in such a way that the tour will be "structured" ad descripbed by
+	 * Dr. Ian Parberry
 	 *
 	 * @param rank the ranks that the knight is on
 	 * @param file the file that the knight is on
@@ -260,18 +264,15 @@ public class Tour {
 	 * @author Evan Dreher
 	 */
 	public void structuredTour(int rank, int file) {
-		// mark current square
-		board[rank][file] = steps;
-		steps++;
-
 		// eliminates incorrect routes before even trying them for an m x n board
 		
 		// case 1: trying to go to the end square before the tour is over
-		if ((rank == 1 && file == 2) || (rank == 2 && file == 1)) {
-			if(steps != 1 || steps != board.length * board[0].length) {
-				return;
-			}
-		}
+//		if ((rank == 1 && file == 2) || (rank == 2 && file == 1)) {
+//			System.out.println(steps);
+//			if (steps != 4 || steps != length) {
+//				return;
+//			}
+//		}
 		
 		// case 2: [0][1] -> [2][0] do not connect and [0][2] -> [1][0] do not connect
 		if(board[0][1] != 0 && board[2][0] != 0) {
@@ -280,64 +281,69 @@ public class Tour {
 			}
 		}
 		
-		if(board[0][2] != 0 && board[1][0] != 0) {
-			if(Math.abs(board[0][2] - board[1][0]) != 1) {
+		if (board[0][2] != 0 && board[1][0] != 0) {
+			if (Math.abs(board[0][2] - board[1][0]) != 1) {
 				return;
 			}
 		}
-		
+
 		// case 3: [0][n-2] -> [2][n-1] and [0][n-3] -> [1][n-1]
-		if(board[0][files - 2] != 0 && board[2][files - 1] != 0) {
-			if(Math.abs(board[0][files - 2] - board[2][files - 1]) != 1) {
+		if (board[0][files - 2] != 0 && board[2][files - 1] != 0) {
+			if (Math.abs(board[0][files - 2] - board[2][files - 1]) != 1) {
 				return;
 			}
 		}
-		
-		if(board[0][files - 3] != 0 && board[1][files - 1] != 0) {
-			if(Math.abs(board[0][files - 3] - board[1][files - 1]) != 1) {
+
+		if (board[0][files - 3] != 0 && board[1][files - 1] != 0) {
+			if (Math.abs(board[0][files - 3] - board[1][files - 1]) != 1) {
 				return;
 			}
 		}
-		
+
 		// case 4: [m-3][0] -> [m-1][1] and [m-2][0] -> [m-1][2] do not connect
-		if(board[ranks - 3][0] != 0 && board[ranks - 1][1] != 0) {
-			if(Math.abs(board[ranks - 3][0] - board[ranks - 1][1]) != 1) {
+		if (board[ranks - 3][0] != 0 && board[ranks - 1][1] != 0) {
+			if (Math.abs(board[ranks - 3][0] - board[ranks - 1][1]) != 1) {
 				return;
 			}
 		}
-		
-		if(board[ranks - 2][0] != 0 && board[ranks - 1][2] != 0) {
-			if(Math.abs(board[ranks - 2][0] - board[ranks - 1][2]) != 1) {
+
+		if (board[ranks - 2][0] != 0 && board[ranks - 1][2] != 0) {
+			if (Math.abs(board[ranks - 2][0] - board[ranks - 1][2]) != 1) {
 				return;
 			}
 		}
-		
+
 		// case 5: [m-3][n-1] -> [m-1][n-2] and [m-2][n-1] -> [m-1][n-3] do not connect
-		if(board[ranks - 3][files - 1] != 0 && board[ranks - 1][files - 2] != 0) {
-			if(Math.abs(board[ranks - 3][files - 1] - board[ranks - 1][files - 2]) != 1) {
+		if (board[ranks - 3][files - 1] != 0 && board[ranks - 1][files - 2] != 0) {
+			if (Math.abs(board[ranks - 3][files - 1] - board[ranks - 1][files - 2]) != 1) {
 				return;
 			}
 		}
-		
-		if(board[ranks - 2][files - 1] != 0 && board[ranks - 1][files - 3] != 0) {
-			if(Math.abs(board[ranks - 2][files - 1] - board[ranks - 1][files - 3]) != 1) {
+
+		if (board[ranks - 2][files - 1] != 0 && board[ranks - 1][files - 3] != 0) {
+			if (Math.abs(board[ranks - 2][files - 1] - board[ranks - 1][files - 3]) != 1) {
 				return;
 			}
 		}
+
+		// mark current square
+		board[rank][file] = steps;
+		steps++;
 
 		// try all branches from current square
 		int[][] moves = warnsdorffMoves(rank, file);
-
 		for (int[] ia : moves) {
 			if (board[ia[0]][ia[1]] == 0) {
 				structuredTour(ia[0], ia[1]);
-				if (tourCompleted()) {
-					return;
-				}
 			}
 		}
 
-		// unmark square if no child paths works
+		// check if problem is done
+		if (tourCompleted()) {
+			return;
+		}
+
+		// if not child nodes had a successful tour
 		board[rank][file] = 0;
 		steps--;
 	}
@@ -349,7 +355,7 @@ public class Tour {
 	 */
 	@Override
 	public String toString() {
-		String ts = "Path:\n";
+		String ts = "Runtime: " + runtime + "\nPath:\n";
 		int maxDigits = Integer.toString(board[0].length * board.length).length() + 1;
 		for (int[] ia : board) {
 			for (int i : ia) {
@@ -364,27 +370,29 @@ public class Tour {
 		}
 		return ts;
 	}
-	
+
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// --------------------------NOT WORKING CODE-----------------------------------
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	
+
 	/**
 	 * an efficient divide and conquer algorithm for the knight's tour problem as
 	 * described by Dr. Ian Parberry
+	 * 
 	 * @since TODO: write date of method completion here
 	 * @author TODO: write your name here if you worked on this method
 	 */
 	public void DNCTour() {
 		// TODO: complete this method
 	}
-	
+
 	/**
 	 * takes 2 structured knight's tours and combines them into 1 larger board
-	 * @param t1 a structured Knight's tour to be merged with t2
-	 * @param t2 a structured Knight's tour to be merged with t1
-	 * @param horizontal determines with t1 and t2 are merged by stacking them on top of each other
-	 * 					 or lining them up side by side
+	 * 
+	 * @param t1         a structured Knight's tour to be merged with t2
+	 * @param t2         a structured Knight's tour to be merged with t1
+	 * @param horizontal determines with t1 and t2 are merged by stacking them on
+	 *                   top of each other or lining them up side by side
 	 * @since TODO: write date of method completion here
 	 * @author TODO: write your name here if you worked on this method
 	 */
