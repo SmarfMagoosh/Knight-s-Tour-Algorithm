@@ -2,7 +2,7 @@ package algorithms;
 
 public class Main {
 	public static void main(String[] args) {
-		int threeTen = testBoard(10, 10, 10);
+		int threeTen = testBoard(6, 12, 10);
 		System.out.println(threeTen);
 	}
 	
