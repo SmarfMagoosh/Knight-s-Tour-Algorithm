@@ -386,16 +386,32 @@ public class Tour {
 	}
 
 	/**
-	 * takes 2 structured knight's tours and combines them into 1 larger board
+	 * takes 4 structured knight's tours and combines them into 1 larger structured knight's tour
 	 * 
-	 * @param t1         a structured Knight's tour to be merged with t2
-	 * @param t2         a structured Knight's tour to be merged with t1
-	 * @param horizontal determines with t1 and t2 are merged by stacking them on
-	 *                   top of each other or lining them up side by side
+	 * @param t1 a structured Knight's tour to be merged with the others
+	 * @param t2 a structured Knight's tour to be merged with the others
+	 * @param t3 a structured Knight's tour to be merged with the others
+	 * @param t4 a structured Knight's tour to be merged with the others
+	 * @return the combined knight's tour
 	 * @since TODO: write date of method completion here
 	 * @author TODO: write your name here if you worked on this method
 	 */
-	public void connectTours(Tour t1, Tour t2, boolean horizontal) {
+	public Tour joinTours(Tour t1, Tour t2, Tour t3, Tour t4) {
 		// TODO: complete this method
+		return null;
+	}
+	
+	/**
+	 * takes 2 structured knight's tours and combines them into 1 larger structured knight's tour
+	 * @param t1 a structured knight's tour to be merged with the others
+	 * @param t2 a sctuctured knight's tour to be merged with the others
+	 * @param horizontal determines whether the tours will be stacked on top of each other or lined up next to each other
+	 * @return the combined knight's tour
+	 * @since TODO: write date of method completion here
+	 * @author TODO: write your name here if you worked on this method
+	 */
+	public Tour joinTours(Tour t1, Tour t2, boolean horizontal) {
+		// TODO: complete this method
+		return null;
 	}
 }
