@@ -106,7 +106,7 @@ public class Tour {
 	 */
 	public void start() {
 		runtime = System.currentTimeMillis();
-		tour(0, 0);
+		structuredTour(0, 0);
 		runtime = System.currentTimeMillis() - runtime;
 	}
 
@@ -267,6 +267,11 @@ public class Tour {
 		// eliminates incorrect routes before even trying them for an m x n board
 		
 		//TODO make sure knight's tour is closed
+		if((rank == 1 && file == 2) || (rank == 2 && file == 1)) {
+			if(!(steps == 2 || steps == length - 1)) {
+				return;
+			}
+		}
 
 		// case 1: [0][1] -> [2][0] do not connect and [0][2] -> [1][0] do not connect
 		if(board[0][1] != 0 && board[2][0] != 0) {
