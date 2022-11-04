@@ -1,0 +1,16 @@
+3 x 10 board:  74 ms
+5 x 6 board:   19 ms
+5 x 8 board:   18 ms
+5 x 10 board:  longer than 1 minute
+6 x 6 board:   11 ms
+6 x 7 board:   99 ms
+6 x 8 board:   5 ms
+6 x 9 board:   0 ms
+6 x 10 board:  12751 ms
+7 x 8 board:   1 ms
+7 x 10 board:  12884 ms
+8 x 8 board:   18 ms
+8 x 9 board:   27 ms
+8 x 10 board:  longer than 1 minute
+9 x 10 board:  2934 ms
+10 x 10 board: longer than 1 minute
