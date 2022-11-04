@@ -106,7 +106,7 @@ public class Tour {
 	 */
 	public void start() {
 		runtime = System.currentTimeMillis();
-		structuredTour(0, 0);
+		tour(0, 0);
 		runtime = System.currentTimeMillis() - runtime;
 	}
 
@@ -266,15 +266,9 @@ public class Tour {
 	public void structuredTour(int rank, int file) {
 		// eliminates incorrect routes before even trying them for an m x n board
 		
-		// case 1: trying to go to the end square before the tour is over
-//		if ((rank == 1 && file == 2) || (rank == 2 && file == 1)) {
-//			System.out.println(steps);
-//			if (steps != 4 || steps != length) {
-//				return;
-//			}
-//		}
-		
-		// case 2: [0][1] -> [2][0] do not connect and [0][2] -> [1][0] do not connect
+		//TODO make sure knight's tour is closed
+
+		// case 1: [0][1] -> [2][0] do not connect and [0][2] -> [1][0] do not connect
 		if(board[0][1] != 0 && board[2][0] != 0) {
 			if(Math.abs(board[0][1] - board[2][0]) != 1) {
 				return;
@@ -287,7 +281,7 @@ public class Tour {
 			}
 		}
 
-		// case 3: [0][n-2] -> [2][n-1] and [0][n-3] -> [1][n-1]
+		// case 2: [0][n-2] -> [2][n-1] and [0][n-3] -> [1][n-1]
 		if (board[0][files - 2] != 0 && board[2][files - 1] != 0) {
 			if (Math.abs(board[0][files - 2] - board[2][files - 1]) != 1) {
 				return;
@@ -300,7 +294,7 @@ public class Tour {
 			}
 		}
 
-		// case 4: [m-3][0] -> [m-1][1] and [m-2][0] -> [m-1][2] do not connect
+		// case 3: [m-3][0] -> [m-1][1] and [m-2][0] -> [m-1][2] do not connect
 		if (board[ranks - 3][0] != 0 && board[ranks - 1][1] != 0) {
 			if (Math.abs(board[ranks - 3][0] - board[ranks - 1][1]) != 1) {
 				return;
@@ -313,7 +307,7 @@ public class Tour {
 			}
 		}
 
-		// case 5: [m-3][n-1] -> [m-1][n-2] and [m-2][n-1] -> [m-1][n-3] do not connect
+		// case 4: [m-3][n-1] -> [m-1][n-2] and [m-2][n-1] -> [m-1][n-3] do not connect
 		if (board[ranks - 3][files - 1] != 0 && board[ranks - 1][files - 2] != 0) {
 			if (Math.abs(board[ranks - 3][files - 1] - board[ranks - 1][files - 2]) != 1) {
 				return;
