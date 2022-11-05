@@ -2,8 +2,16 @@ package algorithms;
 
 public class Main {
 	public static void main(String[] args) {
-		int threeTen = testBoard(6, 12, 10);
-		System.out.println(threeTen);
+		Tour t1 = new Tour(5,6);
+		Tour t2 = new Tour(5,6);
+		Tour t3 = new Tour(5,6);
+		Tour t4 = new Tour(5,6);
+		t1.start();
+		t2.start();	
+		t3.start();
+		t4.start();
+		Tour big = Tour.joinTours(t1, t2, t3, t4);
+		System.out.println(big);
 	}
 	
 	public static int testBoard(int length, int width, int tests) {
