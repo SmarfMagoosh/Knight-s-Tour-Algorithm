@@ -2,12 +2,12 @@ package algorithms;
 
 public class Main {
 	public static void main(String[] args) {
-		Tour t1 = new Tour(5,6);
-		Tour t2 = new Tour(5,6);
-		Tour t3 = new Tour(5,6);
-		Tour t4 = new Tour(5,6);
+		Tour t1 = new Tour(10);
+		Tour t2 = new Tour(10);
+		Tour t3 = new Tour(10);
+		Tour t4 = new Tour(10);
 		t1.start();
-		t2.start();	
+		t2.start();
 		t3.start();
 		t4.start();
 		Tour big = Tour.joinTours(t1, t2, t3, t4);

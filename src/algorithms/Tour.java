@@ -365,59 +365,6 @@ public class Tour {
 	}
 
 	/**
-	 * @return a string representation of the board
-	 * @since 10/19/2022
-	 * @author Evan Dreher
-	 */
-	@Override
-	public String toString() {
-		String ts = "Runtime: " + runtime + "\nPath:\n";
-		int maxDigits = Integer.toString(board[0].length * board.length).length() + 1;
-		for (int[] ia : board) {
-			for (int i : ia) {
-				int iDigits = Integer.toString(i).length();
-				String intStr = "|" + i;
-				for (int j = iDigits; j <= maxDigits; j++) {
-					intStr += " ";
-				}
-				ts += intStr;
-			}
-			ts += "|\n";
-		}
-		ts += path.toString();
-		return ts;
-	}
-
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	// --------------------------NOT WORKING CODE-----------------------------------
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	
-	/**
-	 * completes a structured closed tour missing only the top left corner on a board where
-	 * both height and width are odd
-	 * @param rank the current rank that the knight is on
-	 * @param file the current file that the knight is on
-	 * @return a structured closed tour missing only the top left corner.
-	 * @since TODO: write the date you started writing the method here
-	 * @author TODO: write your name here if you helped write it
-	 */
-	public Tour oddTour(int row, int col) {
-		// TODO: complete this method
-		return null;
-	}
-
-	/**
-	 * an efficient divide and conquer algorithm for the knight's tour problem as
-	 * described by Dr. Ian Parberry
-	 * 
-	 * @since TODO: write date of method completion here
-	 * @author TODO: write your name here if you worked on this method
-	 */
-	public void DNCTour() {
-		// TODO: complete this method
-	}
-
-	/**
 	 * takes 4 structured knight's tours and combines them into 1 larger structured knight's tour
 	 * in the following patter
 	 *       t1 | t2
@@ -428,8 +375,8 @@ public class Tour {
 	 * @param t3 a structured Knight's tour to be merged with the others
 	 * @param t4 a structured Knight's tour to be merged with the others
 	 * @return the combined knight's tour
-	 * @since TODO: write date of method completion here
-	 * @author TODO: write your name here if you worked on this method
+	 * @since 11/5/2022
+	 * @author Evan Dreher
 	 */
 	public static Tour joinTours(Tour t1, Tour t2, Tour t3, Tour t4) {
 		// create new board the size of all params combined
@@ -505,4 +452,60 @@ public class Tour {
 		}
 		return bigger;
 	}
+	
+	/**
+	 * @return a string representation of the board
+	 * @since 10/19/2022
+	 * @author Evan Dreher
+	 */
+	@Override
+	public String toString() {
+		String ts = "Runtime: " + runtime + "\nPath:\n";
+		int maxDigits = Integer.toString(board[0].length * board.length).length() + 1;
+		for (int[] ia : board) {
+			for (int i : ia) {
+				int iDigits = Integer.toString(i).length();
+				String intStr = "|" + i;
+				for (int j = iDigits; j <= maxDigits; j++) {
+					intStr += " ";
+				}
+				ts += intStr;
+			}
+			ts += "|\n";
+		}
+		ts += "\nMoves:\n";
+		ts += path.toString();
+		return ts;
+	}
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// --------------------------NOT WORKING CODE-----------------------------------
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	/**
+	 * completes a structured closed tour missing only the top left corner on a board where
+	 * both height and width are odd
+	 * @param rank the current rank that the knight is on
+	 * @param file the current file that the knight is on
+	 * @return a structured closed tour missing only the top left corner.
+	 * @since TODO: write the date you started writing the method here
+	 * @author TODO: write your name here if you helped write it
+	 */
+	public Tour oddTour(int row, int col) {
+		// TODO: complete this method
+		return null;
+	}
+
+	/**
+	 * an efficient divide and conquer algorithm for the knight's tour problem as
+	 * described by Dr. Ian Parberry
+	 * 
+	 * @since TODO: write date of method completion here
+	 * @author TODO: write your name here if you worked on this method
+	 */
+	public void DNCTour() {
+		// TODO: complete this method
+	}
+
+
 }
