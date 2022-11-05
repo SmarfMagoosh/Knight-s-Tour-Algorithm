@@ -27,6 +27,7 @@ public class Tour {
 	private int files;
 	
 	// Constructors
+	
 	/**
 	 * Initializes the knight's tour problem on a square board
 	 * 
@@ -36,10 +37,12 @@ public class Tour {
 	 */
 	@SuppressWarnings("unused")
 	public Tour(int size) {
-		path = new LinkedList<>();
 		board = new int[size][size];
 		steps = 1;
+		path = new LinkedList<>();
+		
 		solved = false;
+		
 		length = (size * size) + 1;
 		ranks = size;
 		files = size;
@@ -61,10 +64,12 @@ public class Tour {
 	 */
 	@SuppressWarnings("unused")
 	public Tour(int ranks, int files) {
-		path = new LinkedList<>();
 		board = new int[ranks][files];
 		steps = 1;
+		path = new LinkedList<>();
+		
 		solved = false;
+		
 		length = (ranks * files) + 1;
 		this.ranks = ranks;
 		this.files = files;
@@ -189,7 +194,7 @@ public class Tour {
 	}
 
 	/**
-	 * functions like findMoves() but sorts those moves in ascending order of how
+	 * calls findMoves() and sorts those moves in ascending order of how
 	 * many options there are from the square you move to
 	 * 
 	 * @param rank the rank to find moves from
@@ -237,8 +242,6 @@ public class Tour {
 	 * 
 	 * @param rank the rank that the knight is on
 	 * @param file the file that the knight is on
-	 * @param fast set true to use warnsdorffRules for faster runtimes, false
-	 *             otherwise
 	 * @since 10/19/2022
 	 * @author Evan Dreher
 	 */
@@ -387,37 +390,40 @@ public class Tour {
 		// move from top left to top right
 		
 		// build path until we get to exit square
-		Move current = t1.path.remove();
+		t1.path.add(t1.path.remove());
+		Move current = t1.path.removeLast();
 		while (!(current.getX() == t1.ranks - 2 && current.getY() == t1.files - 1)) {
 			bigger.path.add(current);
-			current = t1.path.remove();
+			current = t1.path.removeLast();
 		}
 		bigger.path.add(current);
 		
 		// move from top right to bottom right
 		
-		// reorder array so entry square is in front
+		// reorder array so entry square is at the end
 		while(!(t2.path.get(0).getX() == t2.ranks - 3 && t2.path.get(0).getY() == 1)) {
 			t2.path.add(t2.path.remove());
 		}
+		t2.path.add(t2.path.remove());
 		
-		// add all the elements adjusted for relative position
+		// add all the elements in reverse order adjusted for relative position
 		while(t2.path.size() > 0) {
-			current = t2.path.remove();
+			current = t2.path.removeLast();
 			current.setY(current.getY() + t1.files);
 			bigger.path.add(current);
 		}
 		
 		// move from bottom right to bottom left
 		
-		// reorder array so entry square is in front
+		// reorder array so entry square is at the end
 		while(!(t3.path.get(0).getX() == 0 && t3.path.get(0).getY() == 2)) {
 			t3.path.add(t3.path.remove());
 		}
+		t3.path.add(t3.path.remove());
 		
-		// add all the elements adjusted for relative position
+		// add all the elements in reverse order adjusted for relative position
 		while(t3.path.size() > 0) {
-			current = t3.path.remove();
+			current = t3.path.removeLast();
 			current.setY(current.getY() + t1.files);
 			current.setX(current.getX() + t1.ranks);
 			bigger.path.add(current);
@@ -425,21 +431,22 @@ public class Tour {
 		
 		// move from bottom left back to top left
 		
-		// reorder array so entry square is in front
+		// reorder array so entry square at the end
 		while(!(t4.path.get(0).getX() == 2 && t4.path.get(0).getY() == t4.files - 2)) {
 			t4.path.add(t4.path.remove());
 		}
+		t4.path.add(t4.path.remove());
 		
 		// add all the elements adjusted for relative position
 		while(t4.path.size() > 0) {
-			current = t4.path.remove();
+			current = t4.path.removeLast();
 			current.setX(current.getX() + t1.ranks);
 			bigger.path.add(current);
 		}
 		
 		// finish off top left portion
 		while(t1.path.size() > 0) {
-			bigger.path.add(t1.path.remove());
+			bigger.path.add(t1.path.removeLast());
 		}
 		
 		// print out steps based on path
@@ -506,6 +513,4 @@ public class Tour {
 	public void DNCTour() {
 		// TODO: complete this method
 	}
-
-
 }

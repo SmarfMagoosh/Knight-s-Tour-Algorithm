@@ -2,10 +2,10 @@ package algorithms;
 
 public class Main {
 	public static void main(String[] args) {
-		Tour t1 = new Tour(10);
-		Tour t2 = new Tour(10);
-		Tour t3 = new Tour(10);
-		Tour t4 = new Tour(10);
+		Tour t1 = new Tour(3, 10);
+		Tour t2 = new Tour(3, 10);
+		Tour t3 = new Tour(3, 10);
+		Tour t4 = new Tour(3, 10);
 		t1.start();
 		t2.start();
 		t3.start();
