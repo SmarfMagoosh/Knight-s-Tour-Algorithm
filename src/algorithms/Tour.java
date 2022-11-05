@@ -105,6 +105,16 @@ public class Tour {
 	}
 
 	// Methods for algorithm
+	public void start() {
+		runtime = System.currentTimeMillis();
+		Tour t = this.DNCTour();
+		runtime = System.currentTimeMillis() - runtime;
+		this.board = t.board;
+		this.files = t.files;
+		this.ranks = t.ranks;
+		this.path = t.path;
+	}
+	
 	/**
 	 * makes the first call to the recursive solution finder and tracks the time to
 	 * find a solution
@@ -112,14 +122,12 @@ public class Tour {
 	 * @since 10/19/2022
 	 * @author Evan Dreher
 	 */
-	public void start() {
-		runtime = System.currentTimeMillis();
+	public void solveBoard() {
 		if(ranks % 2 == 1 && files % 2 == 1) {
 			oddTour(ranks - 1, files - 1);
 		} else {
 			structuredTour(0, 0);
 		}
-		runtime = System.currentTimeMillis() - runtime;
 	}
 
 	/**
@@ -243,7 +251,7 @@ public class Tour {
 
 	/**
 	 * recursively solves the knight's tour problem using a simple backtracking
-	 * algorithm
+	 * algorithm, solution is an open knight's tour
 	 * 
 	 * @param rank the rank that the knight is on
 	 * @param file the file that the knight is on
@@ -278,7 +286,7 @@ public class Tour {
 
 	/**
 	 * recursively solves the knight's tour problem using a simple backtracking
-	 * algorithm in such a way that the tour will be "structured" ad descripbed by
+	 * algorithm in such a way that the tour will be "structured" ad described by
 	 * Dr. Ian Parberry
 	 *
 	 * @param rank the ranks that the knight is on
@@ -379,8 +387,8 @@ public class Tour {
 	 * @param rank the current rank that the knight is on
 	 * @param file the current file that the knight is on
 	 * @return a structured closed tour missing only the top left corner.
-	 * @since TODO: write the date you started writing the method here
-	 * @author TODO: write your name here if you helped write it
+	 * @since 11/5/2022
+	 * @author Evan Dreher
 	 */
 	public void oddTour(int rank, int file) {
 
@@ -394,9 +402,6 @@ public class Tour {
 		// make sure knight's tour is closed
 		if ((rank == ranks - 2 && file == files - 3) || (rank == ranks - 3 && file == files - 2)) {
 			if (!(steps == 2 || steps == length - 2)) {
-				if (steps > 20) {
-					System.out.println(steps);
-				}
 				return;
 			}
 		}
@@ -478,7 +483,10 @@ public class Tour {
 
 	/**
 	 * takes 4 structured knight's tours and combines them into 1 larger structured
-	 * knight's tour in the following patter t1 | t2 ------- t3 | t4
+	 * knight's tour in the following patter 
+	 * t1 | t2 
+	 * ------- 
+	 * t3 | t4
 	 * 
 	 * @param t1 a structured Knight's tour to be merged with the others
 	 * @param t2 a structured Knight's tour to be merged with the others
@@ -601,16 +609,12 @@ public class Tour {
 			}
 			ts += "|\n";
 		}
-		ts += "\nMoves:\n";
-		ts += path.toString();
 		return ts;
 	}
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// --------------------------NOT WORKING CODE-----------------------------------
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
 
 	/**
 	 * an efficient divide and conquer algorithm for the knight's tour problem as
@@ -619,7 +623,13 @@ public class Tour {
 	 * @since TODO: write date of method completion here
 	 * @author TODO: write your name here if you worked on this method
 	 */
-	public void DNCTour() {
-		// TODO: complete this method
+	public Tour DNCTour() {
+		if(ranks <= 13 && files <= 13) {
+			solveBoard();
+			return this;
+		} else {
+			// divide into ideal base cases here.
+		}
+		return null;
 	}
 }
