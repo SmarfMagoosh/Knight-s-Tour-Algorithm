@@ -1,6 +1,8 @@
 package algorithms;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 /**
  * Defines a chessboard and methods that allow the knight's tour to be performed
@@ -13,6 +15,7 @@ public class Tour {
 	// tracking members
 	private int[][] board;
 	private int steps;
+	private LinkedList<Move> path;
 
 	// efficiency members
 	private boolean solved;
@@ -22,12 +25,8 @@ public class Tour {
 	private int length;
 	private int ranks;
 	private int files;
-
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	// -------------------------------WORKING
-	// CODE--------------------------------------
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+	
+	// Constructors
 	/**
 	 * Initializes the knight's tour problem on a square board
 	 * 
@@ -37,6 +36,7 @@ public class Tour {
 	 */
 	@SuppressWarnings("unused")
 	public Tour(int size) {
+		path = new LinkedList<>();
 		board = new int[size][size];
 		steps = 1;
 		solved = false;
@@ -61,6 +61,7 @@ public class Tour {
 	 */
 	@SuppressWarnings("unused")
 	public Tour(int ranks, int files) {
+		path = new LinkedList<>();
 		board = new int[ranks][files];
 		steps = 1;
 		solved = false;
@@ -75,6 +76,7 @@ public class Tour {
 		}
 	}
 
+	// Getters
 	/**
 	 * simple getter method
 	 * 
@@ -96,7 +98,8 @@ public class Tour {
 	public long runtime() {
 		return runtime;
 	}
-
+	
+	// Methods for algorithm
 	/**
 	 * makes the first call to the recursive solution finder and tracks the time to
 	 * find a solution
@@ -120,7 +123,17 @@ public class Tour {
 	public boolean tourCompleted() {
 		return steps == length;
 	}
-
+	
+	/**
+	 * determines if a partial solution has been found for an odd tour
+	 * @return true if every square except 1 has been visited, false otherwise
+	 * @since 11/4/2022
+	 * @author Evan Dreher
+	 */
+	public boolean oddTourCompleted() {
+		return steps == length - 1;
+	}
+	
 	/**
 	 * finds all legal knight-moves from [rank][file] that have not been visited
 	 * 
@@ -233,6 +246,7 @@ public class Tour {
 		// mark current square
 		board[rank][file] = steps;
 		steps++;
+		path.add(new Move(rank, file));
 
 		// try all branches from current square
 		int[][] moves = warnsdorffMoves(rank, file);
@@ -251,6 +265,7 @@ public class Tour {
 		// if not child nodes had a successful tour
 		board[rank][file] = 0;
 		steps--;
+		path.removeLast();
 	}
 
 	/**
@@ -266,7 +281,7 @@ public class Tour {
 	public void structuredTour(int rank, int file) {
 		// eliminates incorrect routes before even trying them for an m x n board
 		
-		//TODO make sure knight's tour is closed
+		// make sure knight's tour is closed
 		if((rank == 1 && file == 2) || (rank == 2 && file == 1)) {
 			if(!(steps == 2 || steps == length - 1)) {
 				return;
@@ -328,6 +343,7 @@ public class Tour {
 		// mark current square
 		board[rank][file] = steps;
 		steps++;
+		path.add(new Move(rank, file));
 
 		// try all branches from current square
 		int[][] moves = warnsdorffMoves(rank, file);
@@ -345,8 +361,98 @@ public class Tour {
 		// if not child nodes had a successful tour
 		board[rank][file] = 0;
 		steps--;
+		path.removeLast();
 	}
 
+	/**
+	 * takes 4 structured knight's tours and combines them into 1 larger structured knight's tour
+	 * in the following patter
+	 *       t1 | t2
+	 *       -------
+	 *       t3 | t4
+	 * @param t1 a structured Knight's tour to be merged with the others
+	 * @param t2 a structured Knight's tour to be merged with the others
+	 * @param t3 a structured Knight's tour to be merged with the others
+	 * @param t4 a structured Knight's tour to be merged with the others
+	 * @return the combined knight's tour
+	 * @since 11/5/2022
+	 * @author Evan Dreher
+	 */
+	public static Tour joinTours(Tour t1, Tour t2, Tour t3, Tour t4) {
+		// create new board the size of all params combined
+		int mergedFiles = t1.files + t2.files;
+		int mergedRanks = t1.ranks + t3.ranks;
+		Tour bigger = new Tour(mergedRanks, mergedFiles);
+		
+		// move from top left to top right
+		
+		// build path until we get to exit square
+		Move current = t1.path.remove();
+		while (!(current.getX() == t1.ranks - 2 && current.getY() == t1.files - 1)) {
+			bigger.path.add(current);
+			current = t1.path.remove();
+		}
+		bigger.path.add(current);
+		
+		// move from top right to bottom right
+		
+		// reorder array so entry square is in front
+		while(!(t2.path.get(0).getX() == t2.ranks - 3 && t2.path.get(0).getY() == 1)) {
+			t2.path.add(t2.path.remove());
+		}
+		
+		// add all the elements adjusted for relative position
+		while(t2.path.size() > 0) {
+			current = t2.path.remove();
+			current.setY(current.getY() + t1.files);
+			bigger.path.add(current);
+		}
+		
+		// move from bottom right to bottom left
+		
+		// reorder array so entry square is in front
+		while(!(t3.path.get(0).getX() == 0 && t3.path.get(0).getY() == 2)) {
+			t3.path.add(t3.path.remove());
+		}
+		
+		// add all the elements adjusted for relative position
+		while(t3.path.size() > 0) {
+			current = t3.path.remove();
+			current.setY(current.getY() + t1.files);
+			current.setX(current.getX() + t1.ranks);
+			bigger.path.add(current);
+		}
+		
+		// move from bottom left back to top left
+		
+		// reorder array so entry square is in front
+		while(!(t4.path.get(0).getX() == 2 && t4.path.get(0).getY() == t4.files - 2)) {
+			t4.path.add(t4.path.remove());
+		}
+		
+		// add all the elements adjusted for relative position
+		while(t4.path.size() > 0) {
+			current = t4.path.remove();
+			current.setX(current.getX() + t1.ranks);
+			bigger.path.add(current);
+		}
+		
+		// finish off top left portion
+		while(t1.path.size() > 0) {
+			bigger.path.add(t1.path.remove());
+		}
+		
+		// print out steps based on path
+		ListIterator<Move> it = bigger.path.listIterator(0);
+		int count = 1;
+		while(it.hasNext()) {
+			Move toAdd = it.next();
+			bigger.board[toAdd.getX()][toAdd.getY()] = count;
+			count++;
+		}
+		return bigger;
+	}
+	
 	/**
 	 * @return a string representation of the board
 	 * @since 10/19/2022
@@ -367,12 +473,28 @@ public class Tour {
 			}
 			ts += "|\n";
 		}
+		ts += "\nMoves:\n";
+		ts += path.toString();
 		return ts;
 	}
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// --------------------------NOT WORKING CODE-----------------------------------
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	/**
+	 * completes a structured closed tour missing only the top left corner on a board where
+	 * both height and width are odd
+	 * @param rank the current rank that the knight is on
+	 * @param file the current file that the knight is on
+	 * @return a structured closed tour missing only the top left corner.
+	 * @since TODO: write the date you started writing the method here
+	 * @author TODO: write your name here if you helped write it
+	 */
+	public Tour oddTour(int row, int col) {
+		// TODO: complete this method
+		return null;
+	}
 
 	/**
 	 * an efficient divide and conquer algorithm for the knight's tour problem as
@@ -385,17 +507,5 @@ public class Tour {
 		// TODO: complete this method
 	}
 
-	/**
-	 * takes 2 structured knight's tours and combines them into 1 larger board
-	 * 
-	 * @param t1         a structured Knight's tour to be merged with t2
-	 * @param t2         a structured Knight's tour to be merged with t1
-	 * @param horizontal determines with t1 and t2 are merged by stacking them on
-	 *                   top of each other or lining them up side by side
-	 * @since TODO: write date of method completion here
-	 * @author TODO: write your name here if you worked on this method
-	 */
-	public void connectTours(Tour t1, Tour t2, boolean horizontal) {
-		// TODO: complete this method
-	}
+
 }
