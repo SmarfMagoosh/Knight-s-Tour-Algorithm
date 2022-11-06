@@ -486,7 +486,11 @@ public class Tour {
 	 * knight's tour in the following patter 
 	 * t1 | t2 
 	 * ------- 
+<<<<<<< Updated upstream
 	 * t3 | t4
+=======
+	 * t4 | t3
+>>>>>>> Stashed changes
 	 * 
 	 * @param t1 a structured Knight's tour to be merged with the others
 	 * @param t2 a structured Knight's tour to be merged with the others
@@ -502,7 +506,7 @@ public class Tour {
 		int mergedRanks = t1.ranks + t3.ranks;
 		Tour bigger = new Tour(mergedRanks, mergedFiles);
 
-		// move from top left to top right
+		// partially fill in top left
 
 		// build path until we get to exit square
 		t1.path.add(t1.path.remove());
@@ -522,53 +526,50 @@ public class Tour {
 		}
 		bigger.path.add(current);
 		
-		// move from top right to bottom right
+		// fill in top right
 
-		// reorder array so entry square is at the end
+		// reorder array so entry square is at the beginning
 		while (!(t2.path.get(0).getX() == t2.ranks - 3 && t2.path.get(0).getY() == 1)) {
 			t2.path.add(t2.path.remove());
 		}
-		t2.path.add(t2.path.remove());
 
 		// add all the elements in reverse order adjusted for relative position
 		while (t2.path.size() > 0) {
-			current = t2.path.removeLast();
+			current = t2.path.remove();
 			current.setY(current.getY() + t1.files);
 			bigger.path.add(current);
 		}
 
-		// move from bottom right to bottom left
+		// fill in bottom right
 
 		// reorder array so entry square is at the end
 		while (!(t3.path.get(0).getX() == 0 && t3.path.get(0).getY() == 2)) {
 			t3.path.add(t3.path.remove());
 		}
-		t3.path.add(t3.path.remove());
 
 		// add all the elements in reverse order adjusted for relative position
 		while (t3.path.size() > 0) {
-			current = t3.path.removeLast();
+			current = t3.path.remove();
 			current.setY(current.getY() + t1.files);
 			current.setX(current.getX() + t1.ranks);
 			bigger.path.add(current);
 		}
 
-		// move from bottom left back to top left
+		// fill in bottom left
 
 		// reorder array so entry square at the end
 		while (!(t4.path.get(0).getX() == 2 && t4.path.get(0).getY() == t4.files - 2)) {
 			t4.path.add(t4.path.remove());
 		}
-		t4.path.add(t4.path.remove());
 
 		// add all the elements adjusted for relative position
 		while (t4.path.size() > 0) {
-			current = t4.path.removeLast();
+			current = t4.path.remove();
 			current.setX(current.getX() + t1.ranks);
 			bigger.path.add(current);
 		}
 
-		// finish off top left portion
+		// complete filling in top left
 		while (t1.path.size() > 0) {
 			bigger.path.add(t1.path.removeLast());
 		}
@@ -624,12 +625,20 @@ public class Tour {
 	 * @author TODO: write your name here if you worked on this method
 	 */
 	public Tour DNCTour() {
+<<<<<<< Updated upstream
 		if(ranks <= 13 && files <= 13) {
 			solveBoard();
 			return this;
 		} else {
 			// divide into ideal base cases here.
 		}
+=======
+		if(ranks < 10 && files < 10) {
+			solveBoard();
+			return this;
+		}
+		// TODO: complete this method
+>>>>>>> Stashed changes
 		return null;
 	}
 }
