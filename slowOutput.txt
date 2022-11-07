@@ -1,0 +1,7 @@
+average run time for 5 x 5 board: 0
+average run time for 6 x 6 board: 1
+average run time for 7 x 7 board: 627
+average run time for 8 x 8 board: 14
+average run time for 9 x 9 board: 55
+average run time for 10 x 10 board: 2570
+average run time for 11 x 11 board: 20486
