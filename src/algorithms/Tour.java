@@ -46,12 +46,6 @@ public class Tour {
 		length = (size * size) + 1;
 		ranks = size;
 		files = size;
-
-		for (int[] ia : board) {
-			for (int i : ia) {
-				i = 0;
-			}
-		}
 	}
 
 	/**
@@ -73,12 +67,6 @@ public class Tour {
 		length = (ranks * files) + 1;
 		this.ranks = ranks;
 		this.files = files;
-
-		for (int[] ia : board) {
-			for (int i : ia) {
-				i = 0;
-			}
-		}
 	}
 
 	// Getters
