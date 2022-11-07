@@ -1,0 +1,16 @@
+average run time for 16 x 16 board: 118
+average run time for 32 x 32 board: 283
+average run time for 48 x 48 board: 252
+average run time for 64 x 64 board: 906
+average run time for 80 x 80 board: 35
+average run time for 96 x 96 board: 1213
+average run time for 112 x 112 board: 421
+average run time for 128 x 128 board: 4064
+average run time for 144 x 144 board: 3529
+average run time for 160 x 160 board: 52
+average run time for 176 x 176 board: 74097
+average run time for 192 x 192 board: 3812
+average run time for 208 x 208 board: 17285
+average run time for 224 x 224 board: 1110
+average run time for 240 x 240 board: 3183
+average run time for 256 x 256 board: 10986
